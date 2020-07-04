@@ -1,0 +1,128 @@
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 400px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  color: #6e6e6e;
+}
+
+.sidebar .header {
+  background-color: darkgray;
+  border: 1px grey solid;
+}
+
+.sidebar a {
+  display: block;
+  padding: 15px 15px 15px 15px;
+  text-decoration: none;
+  color: #6e6e6e;
+}
+
+.sidebar a.active {
+
+}
+
+.sidebar a.active .presentation {
+	background-color: #62a864;
+	color: black;
+  }
+
+.sidebar a:hover:not(.active) {
+  background-color: lightgrey;
+  color: black;
+}
+
+.sidebar .header {
+  background: #fff;
+  border: 0;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 28px 0 28px 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.page-header {
+  background: #fff;
+  border-bottom: 6px solid #d3d3d3;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 14px 0px 14px 0;
+  text-align: left;
+  text-transform: uppercase;
+  display: block;
+}
+
+.page-header h1 {
+  padding-left: 15px;
+  color: #6e6e6e;
+}
+
+.modes .mode-selected {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+}
+
+.modes .presentation {
+
+	padding: 15px;
+}
+
+.modes .mode-footer-note {
+
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.modes .mode-image {
+  margin-right: 24px;
+  position: relative;
+  width: 30%;
+}
+
+.modes .image-next-text {
+  display: inline-block;
+  font-size: 13px;
+  width: 60%;
+}
+
+div.content {
+  margin-left: 400px;
+
+}
+
+.content .main {
+  padding: 0 15px 40px 6px;
+  background-color: lightgray;
+
+}
+
+.content .main .viewer {
+  
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}

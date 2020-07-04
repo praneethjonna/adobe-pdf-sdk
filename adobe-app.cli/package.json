@@ -1,0 +1,22 @@
+{
+	"name": "adobe-app.cli",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./bin/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Praneeth Jonna",
+	"license": "ISC",
+	"bin": {
+		"pdf_creator": "bin/index.js"
+	},
+	"dependencies": {
+		"@adobe/dc-services-node-sdk": "^1.0.0",
+		"adobe-resources": "file:../resources",
+		"assets": "file:../assets",
+		"boxen": "^4.0.0",
+		"chalk": "^2.4.2",
+		"yargs": "^15.3.1"
+	}
+}
