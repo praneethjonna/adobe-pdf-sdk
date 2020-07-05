@@ -33,7 +33,7 @@
 				m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
 		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-		ga('create', 'UA-XXXXX-Y', 'auto');
+		ga('create', 'UA-XXXXXXXX-X', 'none');
 		ga('send', 'pageview');
 	</script>
 	<!-- End Google Analytics -->
@@ -154,7 +154,7 @@
 
 			$.getScript('https://documentcloud.adobe.com/view-sdk/main.js', function () {
 
-				let clientId = "40dde91299a34e25949d8da48fd2fc7d";
+				let clientId = "a8738d6bd0bc4cd7978660ca5c7b74c7";
 
 
 				function adobeEventFunction(mode) {
@@ -176,17 +176,25 @@
 
 						AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
 						function (event) {
+							//ga('send', 'event', 'Videos', 'play', 'Fall Campaign');
+							let fileName = event.data.fileName;
 							if(event.type == "DOCUMENT_OPEN"){
-								ga('send', { hitType: 'DOCUMENT_OPEN', eventCategory: 'PDF', eventAction: 'DOCUMENT_OPEN', eventLabel: 'On successful opening of PDF', eventValue: event.data });
+								ga('send', 'event', 'DOCUMENT_OPEN', 'On successful opening of PDF', 'file name: '+ fileName);
+								
 							}
 							else if(event.type == "PAGE_VIEW"){
-								ga('send', { hitType: 'PAGE_VIEW', eventCategory: 'PDF', eventAction: 'PAGE_VIEW', eventLabel: 'Page information on change in page(s) in view', eventValue: event.data });
+								let data =  'page number: '+ event.data.pageNumber + ' file name: '+ fileName;
+								ga('send', 'event', 'PAGE_VIEW', 'Page information on change in page(s) in view', data);
+								
 							}
 							else if(event.type == "DOCUMENT_DOWNLOAD"){
-								ga('send', { hitType: 'DOCUMENT_DOWNLOAD', eventCategory: 'PDF', eventAction: 'DOCUMENT_DOWNLOAD', eventLabel: 'When PDF is downloaded', eventValue: event.data });
+								ga('send', 'event', 'DOCUMENT_DOWNLOAD', 'When the PDF is downloaded','file name: '+ fileName);
+								
 							}
 							else if(event.type == "TEXT_COPY"){
-								ga('send', { hitType: 'TEXT_COPY', eventCategory: 'PDF', eventAction: 'TEXT_COPY', eventLabel: 'On copying any text from a  PDF', eventValue: event.data });
+								let data =  'copied text: '+ event.data.copiedText + ' file name: '+ fileName;
+								ga('send', 'event', 'TEXT_COPY', 'On copying any text from a  PDF', data);
+								
 							}
 						}, {
 						enablePDFAnalytics: true,
