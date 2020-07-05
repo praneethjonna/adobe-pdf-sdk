@@ -180,13 +180,13 @@
 								ga('send', { hitType: 'DOCUMENT_OPEN', eventCategory: 'PDF', eventAction: 'DOCUMENT_OPEN', eventLabel: 'On successful opening of PDF', eventValue: event.data });
 							}
 							else if(event.type == "PAGE_VIEW"){
-								ga('send', { hitType: 'DOCUMENT_OPEN', eventCategory: 'PDF', eventAction: 'DOCUMENT_OPEN', eventLabel: 'Page information on change in page(s) in view', eventValue: event.data });
+								ga('send', { hitType: 'PAGE_VIEW', eventCategory: 'PDF', eventAction: 'PAGE_VIEW', eventLabel: 'Page information on change in page(s) in view', eventValue: event.data });
 							}
 							else if(event.type == "DOCUMENT_DOWNLOAD"){
-								ga('send', { hitType: 'DOCUMENT_OPEN', eventCategory: 'PDF', eventAction: 'DOCUMENT_OPEN', eventLabel: 'When PDF is downloaded', eventValue: event.data });
+								ga('send', { hitType: 'DOCUMENT_DOWNLOAD', eventCategory: 'PDF', eventAction: 'DOCUMENT_DOWNLOAD', eventLabel: 'When PDF is downloaded', eventValue: event.data });
 							}
 							else if(event.type == "TEXT_COPY"){
-								ga('send', { hitType: 'DOCUMENT_OPEN', eventCategory: 'PDF', eventAction: 'DOCUMENT_OPEN', eventLabel: 'On copying any text from a  PDF', eventValue: event.data });
+								ga('send', { hitType: 'TEXT_COPY', eventCategory: 'PDF', eventAction: 'TEXT_COPY', eventLabel: 'On copying any text from a  PDF', eventValue: event.data });
 							}
 						}, {
 						enablePDFAnalytics: true,
