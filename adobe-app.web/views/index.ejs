@@ -23,7 +23,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
-	<script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+	<!-- <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script> -->
 	<!-- Google Analytics -->
 	<script>
 		(function (i, s, o, g, r, a, m) {
@@ -69,13 +69,13 @@
 							</div>
 						</div>
 						<div class="mode-footer-note">
-							Best for storage and productivity apps 
+							Best for storage and productivity apps
 						</div>
 
 					</div>
 				</a>
 				<a href="#" id="sized-container-mode" class="mode">
-					<div  class="presentation">
+					<div class="presentation">
 						<div class=""> <b>Sized Container</b>
 							<!-- <svg viewBox="0 0 36 36" focusable="false"
 								aria-hidden="true" role="img"
@@ -95,12 +95,12 @@
 								slideshow and landscape mode.</div>
 						</div>
 						<div class="mode-footer-note">
-							Best for presentations and keynotes 
+							Best for presentations and keynotes
 						</div>
 					</div>
 				</a>
 				<a href="#" id="in-line-mode" class="mode">
-					<div  class="presentation">
+					<div class="presentation">
 						<div class=""><b>In-Line </b>
 							<!-- <svg viewBox="0 0 36 36" focusable="false"
 								aria-hidden="true" role="img"
@@ -124,12 +124,12 @@
 				</a>
 			</div>
 			<div class="footer">
-			
+
 			</div>
 		</div>
 
 		<div class="content">
-			
+
 			<div class="main">
 				<div id="adobe-dc-view" class="viewer"></div>
 				<!-- <div id="adobe-dc-container-view" class="viewer"></div>
@@ -140,119 +140,129 @@
 
 
 	</div>
+	<script src="https://documentcloud.adobe.com/view-sdk/main.js" onload=""></script>
+
 	<script type="text/javascript">
-		$(document).ready(function () {
 
-			$(".viewer").height($(window).height()-130);
-			let activeViewMode = "FULL_WINDOW";
+		$(window).on('load', function () {
 
-			$(window).resize(function() {
-				$('#content').height($(window).height() - 130);
+			$(".viewer").height($(window).height() - 130);
+
+			$(window).resize(function () {
+				$('.viewer').height($(window).height() - 130);
 			});
 
 			$(window).trigger('resize');
 
-			$.getScript('https://documentcloud.adobe.com/view-sdk/main.js', function () {
 
-				let clientId = "a8738d6bd0bc4cd7978660ca5c7b74c7";
+			let clientId = "a8738d6bd0bc4cd7978660ca5c7b74c7";
+			let activeViewMode = "FULL_WINDOW";
 
+			if (typeof window.AdobeDC == 'undefined') {
+				//the flag was not found, so the code has not run
+				$.getScript('<external JS>');
+			}
+			function adobeEventFunction(mode) {
+				var adobeDCView = new AdobeDC.View({
+					clientId: clientId,
+					divId: 'adobe-dc-view',
+				});
 
-				function adobeEventFunction(mode) {
-					var adobeDCView = new AdobeDC.View({
-						clientId: clientId,
-						divId: 'adobe-dc-view',
-					});
-
-					adobeDCView.previewFile({
-						content: {
-							location: {
-								url: "assets/createPdfFromStaticHtmlOutput.pdf",
-							},
+				adobeDCView.previewFile({
+					content: {
+						location: {
+							url: "assets/createPdfFromStaticHtmlOutput.pdf",
 						},
-						metaData: { fileName: "createPdfFromStaticHtmlOutput.pdf" }
-					}, { defaultViewMode: "FIT_WIDTH", showLeftHandPanel: false, embedMode: mode });
+					},
+					metaData: { fileName: "createPdfFromStaticHtmlOutput.pdf" }
+				}, { defaultViewMode: "FIT_WIDTH", showLeftHandPanel: false, embedMode: mode });
 
-					adobeDCView.registerCallback(
+				adobeDCView.registerCallback(
 
-						AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
-						function (event) {
-							//ga('send', 'event', 'Videos', 'play', 'Fall Campaign');
-							let fileName = event.data.fileName;
-							if(event.type == "DOCUMENT_OPEN"){
-								ga('send', 'event', 'DOCUMENT_OPEN', 'On successful opening of PDF', 'file name: '+ fileName);
-								
-							}
-							else if(event.type == "PAGE_VIEW"){
-								let data =  'page number: '+ event.data.pageNumber + ' file name: '+ fileName;
-								ga('send', 'event', 'PAGE_VIEW', 'Page information on change in page(s) in view', data);
-								
-							}
-							else if(event.type == "DOCUMENT_DOWNLOAD"){
-								ga('send', 'event', 'DOCUMENT_DOWNLOAD', 'When the PDF is downloaded','file name: '+ fileName);
-								
-							}
-							else if(event.type == "TEXT_COPY"){
-								let data =  'copied text: '+ event.data.copiedText + ' file name: '+ fileName;
-								ga('send', 'event', 'TEXT_COPY', 'On copying any text from a  PDF', data);
-								
-							}
-						}, {
-						enablePDFAnalytics: true,
-					}
-					);
-				};
+					AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
+					function (event) {
+						//ga('send', 'event', 'Videos', 'play', 'Fall Campaign');
+						let fileName = event.data.fileName;
+						if (event.type == "DOCUMENT_OPEN") {
+							ga('send', 'event', 'DOCUMENT_OPEN', 'On successful opening of PDF', 'file name: ' + fileName);
 
-				function addAdobeEventListner(mode) {
+						}
+						else if (event.type == "PAGE_VIEW") {
+							let data = 'page number: ' + event.data.pageNumber + ' file name: ' + fileName;
+							ga('send', 'event', 'PAGE_VIEW', 'Page information on change in page(s) in view', data);
 
-					adobeEventFunction(mode);
-					let clientId = "40dde91299a34e25949d8da48fd2fc7d";
-					document.addEventListener("adobe_dc_view_sdk.ready", adobeEventFunction(mode));
-				};
+						}
+						else if (event.type == "DOCUMENT_DOWNLOAD") {
+							ga('send', 'event', 'DOCUMENT_DOWNLOAD', 'When the PDF is downloaded', 'file name: ' + fileName);
 
-				function removeAdobeEventListner(mode) {
-					document.removeEventListener("adobe_dc_view_sdk.ready", adobeEventFunction(mode));
-				};
+						}
+						else if (event.type == "TEXT_COPY") {
+							let data = 'copied text: ' + event.data.copiedText + ' file name: ' + fileName;
+							ga('send', 'event', 'TEXT_COPY', 'On copying any text from a  PDF', data);
 
-				addAdobeEventListner(activeViewMode);
+						}
+					}, {
+					enablePDFAnalytics: true,
+				}
+				);
+			};
 
-				$("#full-window-mode").click(function () {
+			function addAdobeEventListner(mode) {
 
-					$(".mode").removeClass("active");
-					$(this).addClass("active");
-					if (activeViewMode != "FULL_WINDOW") {
+				adobeEventFunction(mode);
+				let clientId = "40dde91299a34e25949d8da48fd2fc7d";
+				document.addEventListener("adobe_dc_view_sdk.ready", adobeEventFunction(mode));
+			};
 
-						removeAdobeEventListner(activeViewMode);
-						activeViewMode = "FULL_WINDOW";
-						addAdobeEventListner(activeViewMode);
-					}
+			function removeAdobeEventListner(mode) {
+				document.removeEventListener("adobe_dc_view_sdk.ready", adobeEventFunction(mode));
+			};
 
-				});
-				$("#sized-container-mode").click(function () {
+			addAdobeEventListner(activeViewMode);			
 
-					$(".mode").removeClass("active");
-					$(this).addClass("active");
-					if (activeViewMode != "SIZED_CONTAINER") {
+			console.log("external script loaded");
 
-						removeAdobeEventListner(activeViewMode);
-						activeViewMode = "SIZED_CONTAINER";
-						addAdobeEventListner("SIZED_CONTAINER");
-					}
+			$("#full-window-mode").click(function () {
 
+				
+				$(".mode").removeClass("active");
+				$(this).addClass("active");
+				if (activeViewMode != "FULL_WINDOW") {
 
-				});
-				$("#in-line-mode").click(function () {
-
-					$(".mode").removeClass("active");
-					$(this).addClass("active");
-					if (activeViewMode != "IN_LINE") {
-
-						removeAdobeEventListner(activeViewMode);
-						activeViewMode = "IN_LINE";
-						addAdobeEventListner("IN_LINE");
-					}
-
-				});
+					removeAdobeEventListner(activeViewMode);
+					activeViewMode = "FULL_WINDOW";
+					addAdobeEventListner(activeViewMode);
+				}
+				
+			
 			});
+			$("#sized-container-mode").click(function () {
+
+				$(".mode").removeClass("active");
+				$(this).addClass("active");
+				if (activeViewMode != "SIZED_CONTAINER") {
+
+					removeAdobeEventListner(activeViewMode);
+					activeViewMode = "SIZED_CONTAINER";
+					addAdobeEventListner("SIZED_CONTAINER");
+				}
+				
+
+			});
+			$("#in-line-mode").click(function () {
+
+				$(".mode").removeClass("active");
+				$(this).addClass("active");
+				if (activeViewMode != "IN_LINE") {
+
+					removeAdobeEventListner(activeViewMode);
+					activeViewMode = "IN_LINE";
+					addAdobeEventListner("IN_LINE");
+				}
+				$(window).trigger('resize');
+
+			});
+
 
 		});
 
